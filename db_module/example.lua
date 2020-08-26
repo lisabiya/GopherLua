@@ -6,8 +6,8 @@
 local example = {}
 --
 local luaDbSqLite = require('db_module.db_module')
-local Builder = require "db_module.LuaQuB"
 local ormDb = luaDbSqLite.new("t_salary")
+local Builder = require "db_module.LuaQuB"
 
 --增
 function example.insertCol()
@@ -51,9 +51,10 @@ function example.getList()
     local object = Builder.new()
                           :select("*")
                           :from("t_salary")
-                          :where("department in", "(" .. table.concat({ "'实习'", "'油烟清理'" }, ',') .. ")")
+                          :where({ department = "管道疏通" })
+                          :where("department in", "(" .. table.concat({ "'实习'", "'油烟清理'" }, ',') .. ")", "or")
                           :where("`name` = ", "'王叔叔'", "or")
-                          :limit(10, 0)
+                          :limit(1, 0)
 
     local code, tables = ormDb:Raw(tostring(object))
     print(ormDb:Tag(), #tables)
