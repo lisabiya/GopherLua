@@ -7,26 +7,56 @@ Http = {}
 
 function Http.new()
     local obj = httpRequest.new()
-    return setmetatable({ http = obj }, { __index = Http })
+    return setmetatable({ http = obj, options = {} }, { __index = Http })
 end
 
 
 --*********************go实现的接口api**************************
-
---Post
----@param   url string   路径
----@param   params table form表单
----@return  number|table
-function Http:postForm(url, params, type)
-    return self.http:postForm({ url = url, params = params, type = type })
+---@param targetUrl string
+function Http:get(targetUrl)
+    self.options["get"] = targetUrl
+    return self
 end
 
---Get
----@param   url string  路径
----@param   query table query参数
----@return  number|table
-function Http:getQuery(url, query)
-    return self.http:getQuery({ url = url, query = query })
+---@param targetUrl string
+function Http:post(targetUrl)
+    self.options["post"] = targetUrl
+    return self
+end
+
+---@param content table  {string=string}
+function Http:set(content)
+    self.options["set"] = content
+    return self
+end
+
+---@param content table
+function Http:query(content)
+    self.options["query"] = content
+    return self
+end
+
+--    "text/html" uses "html"
+--    "application/json" uses "json"
+--    "application/xml" uses "xml"
+--    "text/plain" uses "text"
+--    "application/x-www-form-urlencoded" uses "urlencoded", "form" or "form-data"
+---@param content string
+function Http:type(content)
+    self.options["type"] = content
+    return self
+end
+
+---@param content table
+function Http:send(content)
+    self.options["send"] = content
+    return self
+end
+
+-- 启动查询
+---@return  number|table  返回状态值和返回值
+function Http:End()
+    return self.http:End(self.options)
 end
 
 return Http

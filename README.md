@@ -8,7 +8,7 @@ lua为go增加动态化能力，go为lua提供功能拓展
 - [x] 网络请求库
 
 
-> 简单示例-网络请求
+> 简单示例-数据库请求
 ```lua
 local luaDbSqLite = require('db_module.db_module')
 local ormDb = luaDbSqLite.new("t_salary")

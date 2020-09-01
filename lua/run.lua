@@ -1,6 +1,6 @@
 function initParams()
     local example = require('db_module.example')
-    local httpExample = require('httprequest.httpExample')
+    local httpExample = require('httpRequest.httpExample')
 
     local name = getParams("name")
     RouterF = {
@@ -8,7 +8,8 @@ function initParams()
         remove = example.remove,
         update = example.update,
         getList = example.getList,
-        get = httpExample.get
+        get = httpExample.get,
+        post = httpExample.post,
     }
     if RouterF[name] then
         local code, tables = RouterF[name]()
