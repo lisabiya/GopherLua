@@ -54,7 +54,7 @@ function example.getList()
                           :where({ department = "管道疏通" })
                           :where("department in", "(" .. table.concat({ "'实习'", "'油烟清理'" }, ',') .. ")", "or")
                           :where("`name` = ", "'王叔叔'", "or")
-                          :limit(1, 0)
+                          :limit(3, 0)
 
     local code, tables = ormDb:Raw(tostring(object))
     print(ormDb:Tag(), #tables)

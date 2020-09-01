@@ -6,7 +6,7 @@ import (
 	luar "layeh.com/gopher-luar"
 )
 
-const luaOrmDbName = "db_metatable"
+const metatableName = "db_metatable"
 
 type OrmDB struct {
 	DbName string
@@ -16,7 +16,7 @@ type OrmDB struct {
 
 func RegisterOrmDbType(L *lua.LState) {
 	Setup()
-	mt := L.NewTypeMetatable(luaOrmDbName)
+	mt := L.NewTypeMetatable(metatableName)
 	L.SetGlobal("db_module", mt)
 	// static attributes
 	L.SetField(mt, "new", L.NewFunction(newDb))
@@ -41,7 +41,7 @@ func newDb(L *lua.LState) int {
 	}
 	ud := L.NewUserData()
 	ud.Value = ormDb
-	L.SetMetatable(ud, L.GetTypeMetatable(luaOrmDbName))
+	L.SetMetatable(ud, L.GetTypeMetatable(metatableName))
 	L.Push(ud)
 	return 1
 }
@@ -124,37 +124,4 @@ func checkDb(L *lua.LState) *OrmDB {
 	}
 	L.ArgError(1, "person expected")
 	return nil
-}
-
-func transLuaValue2Map(value lua.LValue) interface{} {
-	if value.Type() == lua.LTTable {
-		var deMap = make(map[string]interface{})
-		var list []interface{}
-		var table = value.(*lua.LTable)
-		table.ForEach(func(key lua.LValue, value lua.LValue) {
-			if key.Type() == lua.LTNumber {
-				list = append(list, transLuaValue2Map(value))
-			} else {
-				deMap[key.String()] = transLuaValue2Map(value)
-			}
-		})
-		if len(deMap) > 0 && len(list) > 0 {
-			return map[string]interface{}{
-				"map":  deMap,
-				"list": list,
-			}
-		}
-		if len(deMap) > 0 {
-			return deMap
-		}
-		if len(list) > 0 {
-			return list
-		}
-		return deMap
-	} else if value.Type() == lua.LTUserData {
-		var table = value.(*lua.LUserData)
-		return table.Value
-	} else {
-		return value
-	}
 }

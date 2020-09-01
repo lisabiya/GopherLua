@@ -1,12 +1,14 @@
 function initParams()
     local example = require('db_module.example')
+    local httpExample = require('httprequest.httpExample')
+
     local name = getParams("name")
-    print(name)
     RouterF = {
         insertCol = example.insertCol,
         remove = example.remove,
         update = example.update,
         getList = example.getList,
+        get = httpExample.get
     }
     if RouterF[name] then
         local code, tables = RouterF[name]()
@@ -15,4 +17,3 @@ function initParams()
         return { code = -1, response = "没有发现此函数" }
     end
 end
-

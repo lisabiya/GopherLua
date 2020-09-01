@@ -3,7 +3,14 @@ package goTool
 import lua "github.com/yuin/gopher-lua"
 
 func TransLuaValue2Map(value lua.LValue) interface{} {
-	if value.Type() == lua.LTTable {
+	switch value.Type() {
+	case lua.LTNumber:
+		return value.(lua.LNumber)
+	case lua.LTString:
+		return string(value.(lua.LString))
+	case lua.LTBool:
+		return bool(value.(lua.LBool))
+	case lua.LTTable:
 		var deMap = make(map[string]interface{})
 		var list []interface{}
 		var table = value.(*lua.LTable)
@@ -27,10 +34,10 @@ func TransLuaValue2Map(value lua.LValue) interface{} {
 			return list
 		}
 		return deMap
-	} else if value.Type() == lua.LTUserData {
+	case lua.LTUserData:
 		var table = value.(*lua.LUserData)
 		return table.Value
-	} else {
+	default:
 		return value
 	}
 }

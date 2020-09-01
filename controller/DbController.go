@@ -3,6 +3,7 @@ package controller
 import (
 	"GopherLua/db_module"
 	"GopherLua/goTool"
+	"GopherLua/httpRequest"
 	"github.com/gin-gonic/gin"
 	lua "github.com/yuin/gopher-lua"
 	"net/http"
@@ -11,6 +12,7 @@ import (
 func LoadLuaModule(c *gin.Context) {
 	luaContext := getDefaultGinStatus(c)
 	db_module.RegisterOrmDbType(luaContext)
+	httpRequest.RegisterType(luaContext)
 	defer luaContext.Close()
 	err := luaContext.DoFile("lua/run.lua")
 	if err != nil {
