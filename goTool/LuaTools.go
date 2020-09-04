@@ -1,6 +1,8 @@
 package goTool
 
-import lua "github.com/yuin/gopher-lua"
+import (
+	lua "github.com/yuin/gopher-lua"
+)
 
 func TransLuaValue2Map(value lua.LValue) interface{} {
 	switch value.Type() {
