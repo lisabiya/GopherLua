@@ -4,8 +4,8 @@ lua为go增加动态化能力，go为lua提供功能拓展
 >项目依托[gopher-lua](https://github.com/yuin/gopher-lua)`go平台的lua解释器` 对lua进行拓展
 
 ## go拓展库
-- [x] 数据库连接查询库`db_module`
-- [x] 网络请求库`httpRequest`
+- [x] 数据库连接查询库`module_db`
+- [x] 网络请求库`module_http`
 
 ### 安装--Installation
 ```go
