@@ -5,7 +5,7 @@ lua为go增加动态化能力，go为lua提供功能拓展
 
 ## go拓展
 - [x] 数据库连接查询库`db_module`
-- [x] 网络请求库
+- [x] 网络请求库`httpRequest`
 
 
 > 简单示例-数据库请求
