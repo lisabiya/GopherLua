@@ -14,12 +14,17 @@ go get github.com/lisabiya/GopherLua
 
 ### 简单示例-http请求 (simple Example httpRequest)
 ```go
-func httpSimpleTest() {
-	//
+import (
+	"fmt"
+	"github.com/lisabiya/GopherLua"
+	"github.com/lisabiya/GopherLua/module_http"
+)
+
+func main() {
 	gopherLua := GopherLua.NewState()
 	gopherLua.Register(module_http.ModuleHttp{})
 	err := gopherLua.DoString(
-`
+		`
     --引用声明模块
 	local http = httpRequest.new()
     local code, response =  http:End({
