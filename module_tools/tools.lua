@@ -57,17 +57,11 @@ function tools.isIP(ipStr)
     end
 end
 
-
--- sql 语句生成
----@param table table  [string,string]
----@return string,string
-function tools.sqlInsert(table)
-    local key, value = "", ""
-    for k, v in pairs(table) do
-        key = key .. k .. ","
-        value = value .. v .. ","
+--显示所有的
+function tools.showLoadedPackage()
+    for key, _ in pairs(package.loaded) do
+        print("loaded", tostring(key))
     end
-    return key, value
 end
 
 return tools

@@ -5,12 +5,13 @@
 ---
 local example = {}
 --
-local json = require('tools.json')
-local Http = require('httpRequest.httpRequest')
+local json = require('module_tools.json')
+local Http = require('module_http.httpRequest')
 
 function example.get()
     local request = Http.new()
     local code, response = request:get("https://www.wanandroid.com/hotkey/json")
+                                  :send({ name = "sss" })
                                   :query({ name = "nihao" })
                                   :End()
     if code == 0 then

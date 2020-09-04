@@ -1,29 +1,49 @@
 # GopherLua 🚜
 lua为go增加动态化能力，go为lua提供功能拓展
 
-> 项目依托[gopher-lua](https://github.com/yuin/gopher-lua)`go平台的lua解释器` 对lua进行拓展
+>项目依托[gopher-lua](https://github.com/yuin/gopher-lua)`go平台的lua解释器` 对lua进行拓展
 
-## go拓展
+## go拓展库
 - [x] 数据库连接查询库`db_module`
 - [x] 网络请求库`httpRequest`
 
-
-> 简单示例-数据库请求
-```lua
-local luaDbSqLite = require('db_module.db_module')
-local ormDb = luaDbSqLite.new("t_salary")
-local Builder = require "db_module.LuaQuB"
-
-function example.getList()
-    local object = Builder.new():select("*"):from("t_salary") :limit(10, 0)
-    local code, tables = ormDb:Raw(tostring(object))
-    print(ormDb:Tag(), #tables)
-    return code, { count = #tables, list = tables }
-end
+### 安装--Installation
+```go
+go get github.com/lisabiya/GopherLua
 ```
 
+### 简单示例-http请求 (simple Example httpRequest)
+```go
+func httpSimpleTest() {
+	//
+	gopherLua := GopherLua.NewState()
+	gopherLua.Register(module_http.ModuleHttp{})
+	err := gopherLua.DoString(
+`
+    --引用声明模块
+	local http = httpRequest.new()
+    local code, response =  http:End({
+        get = "https://www.wanandroid.com/hotkey/json",
+        query = "nihao",
+    })
+    --调用函数  
+    print(code,response)
+`)
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+}
+```
 
->### 添加拓展-`具体实例参考 /httprequest/httpExample.lua`
+<br><br>
+
+### 添加自定义拓展
+> 主要是提供一种思路，需要优化改进的地方还有很多 
+ 
+- 参考 `module_http,module_db` 
+
+- #### 示例
+
 - go声明元表函数
 
 ```go
@@ -64,6 +84,7 @@ func getSimple(L *lua.LState) int {
   --调用函数  
     print(code,response)
 ```
+
 
 
 

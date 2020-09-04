@@ -5,16 +5,19 @@
 ---
 local example = {}
 --
-local luaDbSqLite = require('db_module.db_module')
-local ormDb = luaDbSqLite.new("t_salary")
-local Builder = require "db_module.LuaQuB"
+local luaDbSqLite = require('module_db.db_module')
+--luaDbSqLite.closeDbByTag("sqlite3-salary")
+
+local ormDb = luaDbSqLite.new("sqlite3", "./salary.db", true, "sqlite3-salary")
+print("&************************@********")
+local Builder = require "module_db.LuaQuB"
 
 --增
 function example.insertCol()
     local object = Builder.new()
                           :insert("t_salary",
-            { name = "王叔叔", department = "管道疏通", social_security = 3000,
-              provident_fund = 4000, salary = 15000, salary_time = 1490500066
+            { name = "小明", department = "实习", social_security = 1000,
+              provident_fund = 1000, salary = 5000, salary_time = 1540500066
             })
     local code, response = ormDb:Exec(tostring(object))
     print(ormDb:Tag(), response)
@@ -58,7 +61,12 @@ function example.getList()
 
     local code, tables = ormDb:Raw(tostring(object))
     print(ormDb:Tag(), #tables)
+    --ormDb:CloseDB()
     return code, { count = #tables, list = tables }
+end
+
+function example.closeDB()
+    ormDb:CloseDB()
 end
 
 return example

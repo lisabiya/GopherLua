@@ -11,7 +11,8 @@ function Http.new()
 end
 
 
---*********************go实现的接口api**************************
+--*********************go实现的接口api工具类，便于提供代码提示**************************
+
 ---@param targetUrl string
 function Http:get(targetUrl)
     self.options["get"] = targetUrl
@@ -24,6 +25,7 @@ function Http:post(targetUrl)
     return self
 end
 
+--  header
 ---@param content table  {string=string}
 function Http:set(content)
     self.options["set"] = content
@@ -47,6 +49,7 @@ function Http:type(content)
     return self
 end
 
+--  form表单，json等
 ---@param content table
 function Http:send(content)
     self.options["send"] = content
