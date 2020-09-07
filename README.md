@@ -149,15 +149,22 @@ func main() {
 	if err != nil {
 		fmt.Println(err.Error())
 	}
+	err = gopherLua.ExecuteFunc("TestHttp", 1, lua.LString("测试参数"))
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+	fmt.Println(goTool.TransLuaValue2Map(gopherLua.State.Get(-1)))
 }
 ```
 - lua中调用 `test.lua`
 ```lua
 --直接引用声明模块
-local code, response = httprequest.get(
-        { url = "https://www.wanandroid.com/hotkey/json" })
---调用函数
-print(code, response)
+function TestHttp(params)
+    local code, response = httprequest.get(
+            { url = "https://www.wanandroid.com/hotkey/json" })
+    --调用函数
+    return { code = code, response = response, params = params }
+end
 ```
 
 
