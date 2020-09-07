@@ -11,22 +11,18 @@ Orm = {}
 ---@param enableLog boolean 是否打开数据库log
 function Orm.new(dialect, path, enableLog, tag)
     local obj = db_module.new(dialect, path, enableLog, tag)
-
-    print("新建")
     return obj
 end
 
 --  关闭所有数据库连接
 function Orm.closeDbByTag(tag)
     local obj = db_module.closeDbByTag(tag)
-    print("关闭")
     return obj
 end
 
 --  关闭所有数据库连接
 function Orm.closeAllDb()
     local obj = db_module.closeAllDb()
-    print("关闭")
     return obj
 end
 

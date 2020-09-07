@@ -37,13 +37,12 @@ func (db ModuleDb) RegisterType(L *lua.LState) {
 
 func (db ModuleDb) Close() {
 	for _, orm := range db.OrmDBs {
-		fmt.Println("关闭数据库", orm.Tag)
 		if orm.Db != nil {
 			err := orm.Db.Close()
 			if err != nil {
-				fmt.Println("关闭出错", err.Error())
+				fmt.Printf("关闭指定数据库%s成功,错误信息%s", orm.Tag, err.Error())
 			} else {
-				fmt.Println("关闭数据库成功", orm.Tag)
+				fmt.Printf("关闭指定数据库%s成功", orm.Tag)
 			}
 			orm.Db = nil
 		}
@@ -82,14 +81,13 @@ func closeDbByTag(moduleDb *ModuleDb) lua.LGFunction {
 	return func(state *lua.LState) int {
 		var tag = state.CheckString(1)
 		for _, orm := range moduleDb.OrmDBs {
-			fmt.Println("关闭指定数据库", orm.Tag)
 			if orm.Db != nil && orm.Tag == tag {
 				err := orm.Db.Close()
 				orm.Db = nil
 				if err != nil {
-					fmt.Println("关闭出错", err.Error())
+					fmt.Printf("关闭指定数据库%s成功,错误信息%s", orm.Tag, err.Error())
 				} else {
-					fmt.Println("关闭指定数据库成功", orm.Tag)
+					fmt.Printf("关闭指定数据库%s成功", orm.Tag)
 				}
 
 			}
@@ -101,7 +99,6 @@ func closeDbByTag(moduleDb *ModuleDb) lua.LGFunction {
 			}
 		}
 		moduleDb.OrmDBs = newArr
-		state.Push(lua.LString("关闭成功"))
 		return 1
 	}
 }

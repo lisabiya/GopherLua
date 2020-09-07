@@ -6,6 +6,7 @@ import (
 	"github.com/lisabiya/GopherLua"
 	"github.com/lisabiya/GopherLua/example/controller"
 	"github.com/lisabiya/GopherLua/module_http"
+	"net/http"
 )
 
 func main() {
@@ -34,7 +35,13 @@ func httpSimpleTest() {
 
 func initRouter() {
 	r := gin.Default()
-	controller.LoadLuaState()
 	r.GET("/ping", controller.LoadLuaModule)
+
+	r.GET("/test", func(context *gin.Context) {
+
+		context.JSON(http.StatusOK, gin.H{
+			"result": "成功",
+		})
+	})
 	_ = r.Run() // listen and serve on 0.0.0.0:8080
 }

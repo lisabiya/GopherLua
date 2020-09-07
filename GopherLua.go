@@ -1,6 +1,9 @@
 package GopherLua
 
-import lua "github.com/yuin/gopher-lua"
+import (
+	lua "github.com/yuin/gopher-lua"
+	"math"
+)
 
 type Lua struct {
 	State  *lua.LState
@@ -46,4 +49,11 @@ func (instance *Lua) Close() {
 		var module = instance.module[i]
 		(*module).Close()
 	}
+}
+
+//获取栈中指定返回值，并pop出去，节约内存
+func (instance *Lua) GetAndPop(idx int) lua.LValue {
+	var value = instance.State.Get(idx)
+	instance.State.Pop(int(math.Abs(float64(idx))))
+	return value
 }

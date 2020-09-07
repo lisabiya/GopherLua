@@ -1,11 +1,13 @@
 function initParams()
     --当修改文件后需要移除已加载的包重新加载
-    package.loaded["example/luamodule/exampleDB"] = nil
+    --package.loaded["example/luamodule/exampleDB"] = nil
     --local tools = require('module_tools.tools')
     --tools.showLoadedPackage()
     --业务
     local example = require('example/luamodule/exampleDB')
     local httpExample = require('example.luamodule.exampleHttp')
+
+    _printregs()
 
     local name = getParams("name")
     RouterF = {
