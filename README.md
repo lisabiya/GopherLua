@@ -40,6 +40,9 @@ func main() {
 	}
 }
 ```
+### demo示例--webServer(demoExample-webServer)
+- see example/
+
 ### 性能(performance)
 - 在postman测试脚本中，mysql请求数据列表20ms,1000请求下，内存基本稳定10M以内无变化
 - 当然这只是浅略的测试，目前正打算逐步加入正式项目中实践。（队友听了想打人😀）
