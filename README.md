@@ -1,18 +1,19 @@
 # GopherLua 🚜
 lua为go增加动态化能力，go为lua提供功能拓展
 
->项目依托[gopher-lua](https://github.com/yuin/gopher-lua)`go平台的lua解释器` 对lua进行拓展
+>项目依托[gopher-lua](https://github.com/yuin/gopher-lua)`go平台的lua解释器` 
+><br>进行拓展和封装，主要是提供一个方向/思路，并尝试实现 
 
 ## go拓展库
 - [x] 数据库连接查询库`module_db`
 - [x] 网络请求库`module_http`
 
-### 安装--Installation
+### 安装(Installation)
 ```go
 go get github.com/lisabiya/GopherLua
 ```
 
-### 简单示例-http请求 (simple Example httpRequest)
+### 简单示例--http请求(simple Example httpRequest)
 ```go
 import (
 	"fmt"
@@ -39,12 +40,16 @@ func main() {
 	}
 }
 ```
+### 性能(performance)
+- 在postman测试脚本中，mysql请求数据列表20ms,1000请求下，内存基本稳定10M以内无变化
+- 当然这只是浅略的测试，目前正打算逐步加入正式项目中实践。（队友听了想打人😀）
+
 
 <br><br>
 
 ---
-
-### 添加自定义拓展
+ 
+### 添加自定义拓展(Add custom extension)
 > 主要是提供一种思路，需要优化改进的地方还有很多 
  
 - 参考 `module_http,module_db` 
