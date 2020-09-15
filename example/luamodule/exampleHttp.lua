@@ -6,7 +6,7 @@
 local example = {}
 --
 local json = require('module_tools.json')
-local Http = require('module_http.httpRequest')
+local Http = require('module_http.module_http')
 
 function example.get()
     local request = Http.new()

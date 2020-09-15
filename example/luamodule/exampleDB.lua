@@ -5,7 +5,7 @@
 ---
 local example = {}
 --
-local luaDbSqLite = require('module_db.db_module')
+local luaDbSqLite = require('module_db.module_db')
 luaDbSqLite.closeDbByTag("sqlite3-salary")
 
 local ormDb = luaDbSqLite.new("sqlite3", "./salary.db", true, "sqlite3-salary")

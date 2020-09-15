@@ -1,12 +1,14 @@
 # GopherLua 🚜
-lua为go增加动态化能力，go为lua提供功能拓展
+>lua为go增加动态化能力，go为lua提供功能拓展
 
->项目依托[gopher-lua](https://github.com/yuin/gopher-lua)`go平台的lua解释器` 
-><br>进行拓展和封装，主要是提供一个方向/思路，并尝试实现 
+- 项目依托 [gopher-lua](https://github.com/yuin/gopher-lua)`go平台的lua解释器`进行拓展和封装 
+- 主要是提供一个方向/思路，并尝试实现常用模块
+- 大概是一个为lua提供go轮子环境的项目 
 
 ## go拓展库
 - [x] 数据库连接查询库`module_db`
 - [x] 网络请求库`module_http`
+- [ ] gin web应用 
 
 ### 安装(Installation)
 ```go
@@ -44,7 +46,7 @@ func main() {
 - see example/
 
 ### 性能(performance)
-- 在postman测试脚本中，mysql请求数据列表20ms,1000请求下，内存基本稳定10M以内无变化
+- 在postman测试脚本中，mysql请求数据列表10ms,10000请求下，内存基本稳定10M以内无变化
 - 当然这只是浅略的测试，目前正打算逐步加入正式项目中实践。（队友听了想打人😀）
 
 
@@ -117,6 +119,7 @@ print(code, response)
 ```go
 const metatableName = "request_metatable"
 
+//需要实现 InterfaceModule 接口
 type CustomModule struct {
 }
 
@@ -161,7 +164,7 @@ func main() {
 	if err != nil {
 		fmt.Println(err.Error())
 	}
-	fmt.Println(goTool.TransLuaValue2Map(gopherLua.State.Get(-1)))
+	fmt.Println(goTool.TransLuaValue2Map(gopherLua.GetAndPop(-1)))
 }
 ```
 - lua中调用 `test.lua`

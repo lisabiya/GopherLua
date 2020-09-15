@@ -7,10 +7,11 @@ import (
 
 type Lua struct {
 	State  *lua.LState
-	module []*InterfaceModule
+	module []*Module
 }
 
-type InterfaceModule interface {
+//拓展模块需要实现的接口
+type Module interface {
 	RegisterType(L *lua.LState)
 	Close()
 }
@@ -37,7 +38,7 @@ func (instance *Lua) ExecuteFunc(funcName string, returnParamsCount int, args ..
 	}, args...)
 }
 
-func (instance *Lua) Register(module ...InterfaceModule) {
+func (instance *Lua) Register(module ...Module) {
 	for _, interfaceModule := range module {
 		instance.module = append(instance.module, &interfaceModule)
 		interfaceModule.RegisterType(instance.State)
